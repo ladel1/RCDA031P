@@ -1,0 +1,10 @@
+main{
+    min-height: 80.4vh;
+}
+.navbar-brand img {
+    filter: invert(1);
+}
+
+body{
+    font-family: Roboto;
+}
