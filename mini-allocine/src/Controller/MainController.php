@@ -10,8 +10,13 @@ class MainController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
     public function index(): Response
-    {
-        return $this->render('main/index.html.twig');
+    {   
+        $name = "Eric Maisel";
+        $age = 20;
+        // compact("name") <====> 
+        //['name'=>"Eric Maisel"]
+        return $this->render('main/index.html.twig', 
+        compact("name","age"));
     }
 
     #[Route('/titres/ajouter', name: 'app_media')]
