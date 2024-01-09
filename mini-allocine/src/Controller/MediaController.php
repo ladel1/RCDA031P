@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/titres', name: 'app_media')]
 class MediaController extends AbstractController
 {
     private $titres = [
@@ -19,17 +21,22 @@ class MediaController extends AbstractController
 
     ];
 
-    #[Route('/titres', name: 'app_media')]
-    public function index(): Response
+    #[Route('/', name: '_list')]
+    public function index(Request $request): Response
     {
+        //dump($request);
+        // dump & die
+        //dd($request);
+        
         return $this->render('media/index.html.twig', [
             'titres' => $this->titres,
         ]);
     }
 
-    #[Route('/titres/{id}', name: 'app_media_details')]
+    #[Route('/{id}', name: '_details', requirements: ['id'=>'\d+'])]
     public function details(int $id): Response
     {
+
         $titre = $this->titres[$id-1];
         return $this->render('media/details.html.twig', [
             'titre' => $titre,

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,8 +21,9 @@ class MainController extends AbstractController
     }
 
     #[Route('/titres/ajouter', name: 'app_media')]
-    public function addMedia(): Response
+    public function addMedia(Request $request): Response
     {
+        
         return $this->render('main/add-media.html.twig');
     }
 }
