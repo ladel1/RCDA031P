@@ -4,7 +4,19 @@
 
 {% block body %}
     <div class="row mt-3">
-        <h1>Ceci est la page A-propos</h1>
+        <h1>A-propos</h1>
+    </div>
+    <div class="row mt-3">        
+        {% for person in team %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ person.picture }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ (person.firstname=="Fabien"? person.firstname~"❤":person.firstname) ~ " " ~ person.lastname }}</h5>
+                    <p class="card-text">{{ person.description }}</p>
+                    <p class="card-text"> <small> {{ person.dateOfBirth|date("d-m-Y") ~ " " ~person.creatorOf }} </small> </p>
+                </div>
+          </div>
+        {% endfor %}
     </div>
 
 {% endblock %}
