@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste titres{% endblock %}
+
+{% block body %}
+    <div class="row text-center mt-3">
+        <h1>Détails titre</h1>
+    </div>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h2>{{ titre.titre }}</h2>
+            <p>{{ titre.contenu }}</p>
+            <p><small>{{ titre.realisateur }} - {{ titre['annee-sortie'] }}</small></p>
+        </div>
+    </div>
+{% endblock %}
