@@ -17,7 +17,16 @@ class MediaController extends AbstractController
     #[Route('/', name: '_list')]
     public function index(Request $request, TitreRepository $repo): Response
     {
-        $titres = $repo->findBy([],["nom"=>"DESC"],5,1);
+        // query pour GET
+        $search = $request->query->get("s");
+        
+        
+        if($search){
+            $titres = $repo->search($search);
+        }else{
+            $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,1);
+        }
+
         return $this->render('media/index.html.twig', [
             'titres' => $titres,
         ]);

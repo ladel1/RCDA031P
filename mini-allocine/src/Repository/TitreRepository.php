@@ -21,6 +21,31 @@ class TitreRepository extends ServiceEntityRepository
         parent::__construct($registry, Titre::class);
     }
 
+    /**
+     * DQL
+     */
+    public function findByTitre(string $titre): array{
+        $em = $this->getEntityManager();
+        $dql = "SELECT t FROM App\Entity\Titre t WHERE t.nom LIKE :titre";
+        $query = $em->createQuery($dql);
+        $query->setParameter("titre","%".$titre."%");
+        $query->setMaxResults(5);
+        return $query->getResult();
+    }
+    /**
+     * QueryBuilder
+     */
+    public function search(string $titre): array{
+        $qb = $this->createQueryBuilder("t");
+        $qb->andWhere("t.nom LIKE :titre")
+           ->orWhere("t.contenu LIKE :titre")
+           ->setParameter('titre','%'.$titre.'%');
+
+        $query = $qb->getQuery();
+     
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Titre[] Returns an array of Titre objects
 //     */
