@@ -22,12 +22,12 @@
                     {% for titre in titres %}
                         <tr>
 
-                            <td>{{ titre.titre }}</td>
+                            <td>{{ titre.nom }}</td>
                             <td>{{ titre.contenu|slice(0,50) }}...</td>
                             <td>{{ titre.realisateur }}</td>
-                            <td>{{ titre['annee-sortie'] }}</td>
+                            <td>{{ titre.anneeSortie }}</td>
                             <td>
-                                <a class="btn btn-info" href="{{ path('app_media_details',{'id':loop.index}) }}" >Détails</a>
+                                <a class="btn btn-info" href="{{ path('app_media_details',{'id':titre.id}) }}" >Détails</a>
                             </td>
                         </tr>
                     {% endfor %}

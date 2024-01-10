@@ -12,18 +12,12 @@ class MainController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {   
+        dump($this->getParameter('kernel.project_dir')."\\data\\team.json");
         $name = "Eric Maisel";
         $age = 20;
         // compact("name") <====> 
         //['name'=>"Eric Maisel"]
         return $this->render('main/index.html.twig', 
         compact("name","age"));
-    }
-
-    #[Route('/titres/ajouter', name: 'app_media')]
-    public function addMedia(Request $request): Response
-    {
-        
-        return $this->render('main/add-media.html.twig');
     }
 }
