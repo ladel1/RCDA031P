@@ -8,9 +8,9 @@
     </div>
     <div class="row">
         <div class="col-8 offset-2">
-            <h2>{{ titre.titre }}</h2>
+            <h2>{{ titre.nom }}</h2>
             <p>{{ titre.contenu }}</p>
-            <p><small>{{ titre.realisateur }} - {{ titre['annee-sortie'] }}</small></p>
+            <p><small>{{ titre.realisateur }} - {{ titre.anneeSortie }}</small></p>
         </div>
     </div>
 {% endblock %}
