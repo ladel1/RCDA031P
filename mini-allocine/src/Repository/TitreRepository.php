@@ -35,11 +35,21 @@ class TitreRepository extends ServiceEntityRepository
     /**
      * QueryBuilder
      */
-    public function search(string $titre): array{
+    public function search(string $keyword,string $isNomChecked, string $isRealisateurChecked, string $isContenuChecked): array{
         $qb = $this->createQueryBuilder("t");
-        $qb->andWhere("t.nom LIKE :titre")
-           ->orWhere("t.contenu LIKE :titre")
-           ->setParameter('titre','%'.$titre.'%');
+        if($isNomChecked){
+            $qb->andWhere("t.nom LIKE :keyword");
+        }
+        if($isContenuChecked){
+            $qb->orWhere("t.contenu LIKE :keyword");
+        }
+        if($isRealisateurChecked){
+            $qb->orWhere("t.realisateur LIKE :keyword");
+        }
+
+        if($isNomChecked || $isContenuChecked || $isRealisateurChecked){
+            $qb->setParameter('keyword','%'.$keyword.'%');
+        }
 
         $query = $qb->getQuery();
      

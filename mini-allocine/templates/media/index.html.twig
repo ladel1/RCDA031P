@@ -8,9 +8,32 @@
     </div>
     <div class="row">
         <div class="col-4 offset-4">            
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" name="s" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form  role="search">
+                <div class="d-flex">
+                    <input class="form-control me-2" type="search" name="s" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </div>
+                <div class="mt-2">
+                    <label>Filtre:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  name="nom" id="nom" checked>
+                        <label class="form-check-label" for="nom">
+                          Chercher par nom
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  name="realisateur" id="realisateur" >
+                        <label class="form-check-label" for="realisateur">
+                          Chercher par réalisateur
+                        </label>
+                      </div>                    
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox"  name="contenu" id="contenu" >
+                        <label class="form-check-label" for="contenu">
+                          Chercher par Contenu
+                        </label>
+                      </div>                    
+                </div>
             </form>
         </div>
     </div>

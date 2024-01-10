@@ -18,11 +18,14 @@ class MediaController extends AbstractController
     public function index(Request $request, TitreRepository $repo): Response
     {
         // query pour GET
-        $search = $request->query->get("s");
-        
-        
+        $search = $request->query->get("s");                
         if($search){
-            $titres = $repo->search($search);
+            
+            $isNomChecked = $request->query->get("nom")==="on";
+            $isRealisateurChecked = $request->query->get("realisateur")==="on";
+            $isContenuChecked = $request->query->get("contenu")==="on";
+           
+            $titres = $repo->search($search,$isNomChecked,$isRealisateurChecked,$isContenuChecked);
         }else{
             $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,1);
         }
