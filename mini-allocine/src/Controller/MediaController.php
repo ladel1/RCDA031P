@@ -21,11 +21,11 @@ class MediaController extends AbstractController
         $search = $request->query->get("s");                
         if($search){
             
-            $isNomChecked = $request->query->get("nom")==="on";
-            $isRealisateurChecked = $request->query->get("realisateur")==="on";
-            $isContenuChecked = $request->query->get("contenu")==="on";
+            $conditions['nom'] = $request->query->get("nom")==="on";
+            $conditions['realisateur'] = $request->query->get("realisateur")==="on";
+            $conditions['contenu'] = $request->query->get("contenu")==="on";
            
-            $titres = $repo->search($search,$isNomChecked,$isRealisateurChecked,$isContenuChecked);
+            $titres = $repo->search($search,$conditions);
         }else{
             $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,1);
         }

@@ -10,7 +10,7 @@
         <div class="col-4 offset-4">            
             <form  role="search">
                 <div class="d-flex">
-                    <input class="form-control me-2" type="search" name="s" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" name="s" value="{{ app.request.get('s') }}" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </div>
                 <div class="mt-2">
