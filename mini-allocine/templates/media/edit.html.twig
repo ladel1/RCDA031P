@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un titre{% endblock %}
+
+{% block body %}
+    <div class="row text-center mt-3">
+        <h1>Modifier un titre</h1>
+    </div>
+    <div class="row">
+        <div class="col-8 offset-2">
+            {{ form_start( titreForm ) }}
+                {{ form_widget( titreForm ) }}
+                <button class="btn btn-dark" type="submit">Modifier</button>
+            {{ form_end( titreForm ) }}
+        </div>
+    </div>
+{% endblock %}

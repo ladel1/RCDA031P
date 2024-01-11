@@ -68,6 +68,22 @@ class MediaController extends AbstractController
         return $this->render('media/add.html.twig', [ "titreForm"=>$form->createView() ]);
     }
 
+    #[Route('/modifier/{id}', name: '_modifier')]
+    public function edit(Request $request,Titre $titre, EntityManagerInterface $em): Response
+    {        
+        $form = $this->createForm(TitreType::class,$titre);
+        // pour persister le formulaire 
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){                        
+            $em->flush();
+            // message
+            $this->addFlash("success","Titre modifié!");
+            // redirection 
+            return $this->redirectToRoute("app_media_list");
+        }
+        return $this->render('media/edit.html.twig', [ "titreForm"=>$form->createView() ]);
+    }
+
     #[Route('/supprimer', name: '_supprimer')]
     public function delete(Request $request,EntityManagerInterface $em){        
         $idTitre = $request->request->get("delete-titre");
