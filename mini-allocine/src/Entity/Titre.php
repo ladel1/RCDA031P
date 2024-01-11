@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TitreRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TitreRepository::class)]
 class Titre
@@ -14,15 +15,22 @@ class Titre
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message:"Veuillez renseigner un nom")]
     #[ORM\Column(length: 260)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $contenu = null;
 
+    #[Assert\NotBlank(message:"Veuillez renseigner un réalisateur")]
     #[ORM\Column(length: 50)]
     private ?string $realisateur = null;
 
+    #[Assert\Range(
+        min: 1920,
+        max: 2024,
+        notInRangeMessage:"L'année de sortie doit être entre {{ min }} et {{ max }}"
+    )]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $anneeSortie = null;
 

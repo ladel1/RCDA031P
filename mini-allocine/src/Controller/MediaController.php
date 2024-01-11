@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function Symfony\Component\Clock\now;
+
 #[Route('/titres', name: 'app_media')]
 class MediaController extends AbstractController
 {
@@ -51,15 +53,31 @@ class MediaController extends AbstractController
     public function add(Request $request, EntityManagerInterface $em): Response
     {
         $titre = new Titre();
+        
         $form = $this->createForm(TitreType::class,$titre);
         // pour persister le formulaire 
         $form->handleRequest($request);
-        if($form->isSubmitted()){            
+        if($form->isSubmitted() && $form->isValid()){            
             $em->persist($titre);
             $em->flush();
+            // message
+            $this->addFlash("success","Titre créé!");
             // redirection 
             return $this->redirectToRoute("app_media_list");
         }
         return $this->render('media/add.html.twig', [ "titreForm"=>$form->createView() ]);
     }
+
+    #[Route('/supprimer', name: '_supprimer')]
+    public function delete(Request $request,EntityManagerInterface $em){        
+        $idTitre = $request->request->get("delete-titre");
+        if($request->isMethod("POST") && !empty($idTitre) ){
+            $titre = $em->find(Titre::class,$idTitre);
+            $em->remove($titre);
+            $em->flush();
+            $this->addFlash("success","Titre supprimé!");
+        }
+        return $this->redirectToRoute("app_media_list");
+    }
+
 }
