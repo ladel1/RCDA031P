@@ -6,13 +6,9 @@
     <div class="row mt-3">
         <h1>Wish detail</h1>
     </div>
-    {% include "fragments/messages.html.twig" %}
     <div class="row">
         <div class="col-6 offset-3">
-            <h2>{{ wish.title }}</h2>
-            <p>{{ wish.description }}</p>
-            <p>{{ wish.author }}</p>
-            <p>{{ wish.dateCreated|date("Y-m-d") }}</p>           
+            {{ form(wishForm) }}     
         </div>
     </div>
 {% endblock %}
