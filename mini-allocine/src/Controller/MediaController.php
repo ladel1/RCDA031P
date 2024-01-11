@@ -27,7 +27,7 @@ class MediaController extends AbstractController
            
             $titres = $repo->search($search,$conditions);
         }else{
-            $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,1);
+            $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,0);
         }
 
         return $this->render('media/index.html.twig', [

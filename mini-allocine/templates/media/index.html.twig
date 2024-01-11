@@ -16,19 +16,19 @@
                 <div class="mt-2">
                     <label>Filtre:</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox"  name="nom" id="nom" checked>
+                        <input class="form-check-input" type="checkbox" {{ app.request.get('nom')=='on'?'checked':'' }} name="nom" id="nom" checked>
                         <label class="form-check-label" for="nom">
                           Chercher par nom
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox"  name="realisateur" id="realisateur" >
+                        <input class="form-check-input" type="checkbox" {{ app.request.get('realisateur')=='on'?'checked':'' }}  name="realisateur" id="realisateur" >
                         <label class="form-check-label" for="realisateur">
                           Chercher par réalisateur
                         </label>
                       </div>                    
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox"  name="contenu" id="contenu" >
+                        <input class="form-check-input" type="checkbox" {{ app.request.get('contenu')=='on'?'checked':'' }}  name="contenu" id="contenu" >
                         <label class="form-check-label" for="contenu">
                           Chercher par Contenu
                         </label>

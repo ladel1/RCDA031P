@@ -7,6 +7,11 @@
         <h1>Wish detail</h1>
     </div>
     <div class="row">
-        <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis animi voluptatibus aspernatur assumenda quod et odio. Veritatis, facere. Quaerat necessitatibus vel deserunt officia velit similique! Atque officia explicabo culpa ipsa.</span><span>Aut atque corporis doloremque non odio deleniti voluptatibus voluptatum accusantium autem dolor, dolorum tempora laudantium earum ab hic sapiente sequi? Suscipit voluptas neque ea minus sequi excepturi incidunt aspernatur quam!</span><span>Magnam dolorem id odit consequuntur fuga vel. Perspiciatis veritatis doloribus consequuntur, impedit vel repellat dolore provident aliquam itaque accusantium saepe eum labore excepturi enim recusandae voluptate vitae omnis dolorum! Repellendus.</span><span>Qui reprehenderit necessitatibus blanditiis officiis culpa, debitis perspiciatis ipsum. Optio cupiditate iste ipsum soluta quis, veniam nihil. Possimus dignissimos repudiandae quaerat alias, adipisci nisi voluptates, eos veniam praesentium asperiores totam.</span><span>Cupiditate quas ea itaque amet cum eum provident ducimus. Doloribus veniam ab eius, laboriosam voluptatum et ex nostrum distinctio laudantium recusandae eligendi praesentium itaque, officia velit veritatis esse omnis exercitationem!</span></p>
+        <div class="col-6 offset-3">
+            <h2>{{ wish.title }}</h2>
+            <p>{{ wish.description }}</p>
+            <p>{{ wish.author }}</p>
+            <p>{{ wish.dateCreated|date("Y-m-d") }}</p>           
+        </div>
     </div>
 {% endblock %}
