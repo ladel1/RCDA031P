@@ -8,25 +8,10 @@
     </div>
     <div class="row">
         <div class="col-8 offset-2">
-            <form action="" method="post">
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" placeholder="ex. Endgame">
-                </div>
-                <div class="mb-3">
-                    <label for="realisateur" class="form-label">Réalisateur</label>
-                    <input type="text" class="form-control" id="realisateur" name="realisateur" placeholder="ex. Dupont">
-                </div>
-                <div class="mb-3">
-                    <label for="annee" class="form-label">Année de sortie</label>
-                    <input type="number" class="form-control" id="annee" name="annee" placeholder="ex. {{ 'now'|date('Y') }}">
-                </div>
-                <div class="mb-3">
-                    <label for="contenu" class="form-label">Contenu</label>
-                    <textarea class="form-control" id="contenu" name="contenu" rows="3"></textarea>
-                </div> 
-                <button class="btn btn-dark" type="submit" >Ajouter</button>               
-            </form>
+            {{ form_start( titreForm ) }}
+                {{ form_widget( titreForm ) }}
+                <button class="btn btn-dark" type="submit">ajouter</button>
+            {{ form_end( titreForm ) }}
         </div>
     </div>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Titre;
+use App\Form\TitreType;
 use App\Repository\TitreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,31 +50,16 @@ class MediaController extends AbstractController
     #[Route('/ajouter', name: '_ajouter')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
-        if($request->isMethod("POST")){
-            // get data from form
-            $nom = $request->request->get("nom");
-            $realisateur = $request->request->get("realisateur");
-            $anneeSortie = $request->request->get("annee");
-            $contenu = $request->request->get("contenu");
-            // create instance
-            $titre = (new Titre())->setNom($nom)
-                                  ->setRealisateur($realisateur)
-                                  ->setAnneeSortie($anneeSortie)
-                                  ->setContenu($contenu);
-            // Persist
+        $titre = new Titre();
+        $form = $this->createForm(TitreType::class,$titre);
+        // pour persister le formulaire 
+        $form->handleRequest($request);
+        if($form->isSubmitted()){            
             $em->persist($titre);
             $em->flush();
-            // redirect
+            // redirection 
             return $this->redirectToRoute("app_media_list");
-
         }
-        return $this->render('media/add.html.twig', [ ]);
+        return $this->render('media/add.html.twig', [ "titreForm"=>$form->createView() ]);
     }
-
-
-
-
-
-
-
 }
