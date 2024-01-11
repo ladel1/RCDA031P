@@ -71,7 +71,8 @@ class MediaController extends AbstractController
     #[Route('/supprimer', name: '_supprimer')]
     public function delete(Request $request,EntityManagerInterface $em){        
         $idTitre = $request->request->get("delete-titre");
-        if($request->isMethod("POST") && !empty($idTitre) ){
+        $csrfToken = $request->request->get("csrf_token");
+        if($request->isMethod("POST") && !empty($idTitre) && $this->isCsrfTokenValid("supp_titre_".$idTitre,$csrfToken)){
             $titre = $em->find(Titre::class,$idTitre);
             $em->remove($titre);
             $em->flush();
