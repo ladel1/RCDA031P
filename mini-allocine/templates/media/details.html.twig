@@ -13,4 +13,27 @@
             <p><small>{{ titre.realisateur }} - {{ titre.anneeSortie }}</small></p>
         </div>
     </div>
+    <div class="row text-center mt-3">
+        <hr>
+        <h2>Les avis:</h2>
+    </div>
+    <div class="row mb-4">
+        <div class="col-8 offset-2">            
+            {% for avis in listeAvis %}
+                <p><b>Note:</b> {{avis.note}}</p>
+                <p><b>Avis:</b> {{avis.contenu}}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="row mb-5">
+        <div class="col-6 offset-3">
+            <hr>
+            <div class="row text-center mb-3">
+                <h2>Ajouter un avis</h2>
+            </div>
+            {{ form(avisForm) }}
+        </div>
+    </div>    
 {% endblock %}

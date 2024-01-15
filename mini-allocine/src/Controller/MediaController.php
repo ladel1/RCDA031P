@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Avis;
 use App\Entity\Titre;
+use App\Form\AvisType;
 use App\Form\TitreType;
+use App\Repository\AvisRepository;
 use App\Repository\TitreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,12 +42,32 @@ class MediaController extends AbstractController
     }
 
     #[Route('/{id}', name: '_details', requirements: ['id'=>'\d+'])]
-    public function details(Titre $titre): Response
+    public function details( Titre $titre,
+                             Request $request,
+                             EntityManagerInterface $em,
+                             AvisRepository $avisRepo
+                             ): Response
     {
-        // $titre =  $repo->find($id);
 
+        // créer une instance avis
+        $avis = new Avis();
+        $avis->setTitre($titre);
+
+        $avisForm = $this->createForm(AvisType::class,$avis);
+        $avisForm->handleRequest($request);
+
+        if($avisForm->isSubmitted() && $avisForm->isValid()){
+            $em->persist($avis);
+            $em->flush();            
+        }
+
+        // chercher les avis
+        $listeAvis = $avisRepo->findBy(['titre'=>$titre]);
+        
         return $this->render('media/details.html.twig', [
             'titre' => $titre,
+            'avisForm'=>$avisForm->createView(),
+            'listeAvis'=>$listeAvis
         ]);
     }
 
@@ -68,7 +91,7 @@ class MediaController extends AbstractController
         return $this->render('media/add.html.twig', [ "titreForm"=>$form->createView() ]);
     }
 
-    #[Route('/modifier/{id}', name: '_modifier')]
+    #[Route('/modifier/{id}', name: '_modifier', requirements: ['id'=>'\d+'])]
     public function edit(Request $request,Titre $titre, EntityManagerInterface $em): Response
     {        
         $form = $this->createForm(TitreType::class,$titre);

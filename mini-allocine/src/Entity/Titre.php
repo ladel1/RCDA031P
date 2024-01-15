@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TitreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,6 +35,14 @@ class Titre
     )]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $anneeSortie = null;
+
+    #[ORM\OneToMany(mappedBy: 'titre', targetEntity: Avis::class, orphanRemoval: true)]
+    private Collection $avis;
+
+    public function __construct()
+    {
+        $this->avis = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,6 +93,36 @@ class Titre
     public function setAnneeSortie(int $anneeSortie): static
     {
         $this->anneeSortie = $anneeSortie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setTitre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getTitre() === $this) {
+                $avi->setTitre(null);
+            }
+        }
 
         return $this;
     }
