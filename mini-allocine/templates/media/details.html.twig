@@ -11,6 +11,12 @@
             <h2>{{ titre.nom }}</h2>
             <p>{{ titre.contenu }}</p>
             <p><small>{{ titre.realisateur }} - {{ titre.anneeSortie }}</small></p>
+            <h6>Catégories</h6>
+            <ol>
+                {% for cat in titre.categories %}
+                    <li>{{ cat.nom }}</li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
     <div class="row text-center mt-3">

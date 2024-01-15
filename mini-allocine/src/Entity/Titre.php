@@ -39,9 +39,13 @@ class Titre
     #[ORM\OneToMany(mappedBy: 'titre', targetEntity: Avis::class, orphanRemoval: true)]
     private Collection $avis;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'titres')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,6 +127,30 @@ class Titre
                 $avi->setTitre(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
