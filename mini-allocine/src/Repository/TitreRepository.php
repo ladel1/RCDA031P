@@ -21,6 +21,18 @@ class TitreRepository extends ServiceEntityRepository
         parent::__construct($registry, Titre::class);
     }
 
+
+    public function pagination(int $page): array{
+
+        $size = 4;
+        $first = ($page-1)*$size;
+        $qb = $this->createQueryBuilder("t")
+                   ->setFirstResult($first)
+                   ->setMaxResults($size);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * DQL
      */

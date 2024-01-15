@@ -20,24 +20,27 @@ use function Symfony\Component\Clock\now;
 class MediaController extends AbstractController
 {
 
-    #[Route('/', name: '_list')]
-    public function index(Request $request, TitreRepository $repo): Response
+    #[Route('/{page}', name: '_list', requirements:['page'=>'\d+'])]
+    public function index(Request $request, TitreRepository $repo,int $page=null): Response
     {
         // query pour GET
         $search = $request->query->get("s");                
-        if($search){
-            
+        if($search){            
             $conditions['nom'] = $request->query->get("nom")==="on";
             $conditions['realisateur'] = $request->query->get("realisateur")==="on";
             $conditions['contenu'] = $request->query->get("contenu")==="on";
            
             $titres = $repo->search($search,$conditions);
+        }else if($page){
+            $titres = $repo->pagination($page);
         }else{
-            $titres = $repo->findBy([],["anneeSortie"=>"DESC"],10,0);
+            $titres = $repo->findAll();
         }
+        
 
         return $this->render('media/index.html.twig', [
             'titres' => $titres,
+            'nbrPage' => $repo->count([])/4
         ]);
     }
 
