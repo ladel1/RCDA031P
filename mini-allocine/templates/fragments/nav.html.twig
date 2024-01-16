@@ -9,7 +9,18 @@
           <a class="nav-link active" aria-current="page" href="{{ path("app_home") }}">Accueil</a>
           <a class="nav-link" href="{{ url("app_media_list") }}">Liste titres</a>
           <a class="nav-link" href="{{ url("app_media_ajouter") }}">Ajouter un titre</a>
+          {% if app.user %}
+            <a class="nav-link" href="{{ url("app_logout") }}">Déconnexion</a>
+          {% else %}
+            <a class="nav-link" href="{{ url("app_login") }}">Connexion</a>
+            <a class="nav-link" href="{{ url("app_register") }}">Inscription</a>
+          {% endif %}
         </div>
       </div>
+      {% if app.user %}
+        <div>
+          <a class="nav-link" href="{{ path('app_profile') }}">{{ app.user.prenom ~" "~app.user.nom }}</a>
+        </div>
+      {% endif %}
     </div>
 </nav>

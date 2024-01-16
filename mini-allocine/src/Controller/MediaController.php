@@ -78,6 +78,7 @@ class MediaController extends AbstractController
     #[Route('/ajouter', name: '_ajouter')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
+        
         $titre = new Titre();
         
         $form = $this->createForm(TitreType::class,$titre);
