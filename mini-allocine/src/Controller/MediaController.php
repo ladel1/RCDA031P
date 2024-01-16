@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function Symfony\Component\Clock\now;
 
@@ -44,7 +45,7 @@ class MediaController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: '_details', requirements: ['id'=>'\d+'])]
+    #[Route('/detail/{id}', name: '_details', requirements: ['id'=>'\d+'])]
     public function details( Titre $titre,
                              Request $request,
                              EntityManagerInterface $em,
@@ -59,7 +60,7 @@ class MediaController extends AbstractController
         $avisForm = $this->createForm(AvisType::class,$avis);
         $avisForm->handleRequest($request);
 
-        if($avisForm->isSubmitted() && $avisForm->isValid()){
+        if($this->isGranted("ROLE_MEMBER") && $avisForm->isSubmitted() && $avisForm->isValid()){
             $em->persist($avis);
             $em->flush();            
         }
@@ -74,11 +75,16 @@ class MediaController extends AbstractController
         ]);
     }
 
-
+    // méthode 2
+    //#[IsGranted("ROLE_USER")]    
     #[Route('/ajouter', name: '_ajouter')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
-        
+        // méthode 1
+        // if(!$this->isGranted("ROLE_USER")){            
+        //     return $this->redirectToRoute("app_login");
+        // }
+
         $titre = new Titre();
         
         $form = $this->createForm(TitreType::class,$titre);

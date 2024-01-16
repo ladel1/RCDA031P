@@ -32,14 +32,15 @@
         </div>
     </div>
 
-
-    <div class="row mb-5">
-        <div class="col-6 offset-3">
-            <hr>
-            <div class="row text-center mb-3">
-                <h2>Ajouter un avis</h2>
+    {% if is_granted("ROLE_MEMBER") %}
+        <div class="row mb-5">
+            <div class="col-6 offset-3">
+                <hr>
+                <div class="row text-center mb-3">
+                    <h2>Ajouter un avis</h2>
+                </div>
+                {{ form(avisForm) }}
             </div>
-            {{ form(avisForm) }}
         </div>
-    </div>    
+    {% endif %}    
 {% endblock %}

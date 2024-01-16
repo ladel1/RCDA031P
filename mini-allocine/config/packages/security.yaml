@@ -39,6 +39,14 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/titres/ajouter, roles: ROLE_EDITOR }
+        - { path: ^/titres/modifier, roles: ROLE_EDITOR }
+        - { path: ^/titres/supprimer, roles: ROLE_EDITOR }
+
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER,ROLE_MEMBER,ROLE_EDITOR]
+        ROLE_EDITOR: ROLE_MEMBER
+ 
 
 when@test:
     security:
