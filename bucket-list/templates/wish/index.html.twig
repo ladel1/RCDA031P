@@ -18,6 +18,7 @@
                         <th>Titre</th>
                         <th>Résumé</th>
                         <th>Auteur</th>
+                        <th>Catégorie</th>
                         <th>Date de la création</th>
                         <th>Actions</th>
                     </tr>
@@ -28,6 +29,7 @@
                             <td>{{ wish.title }}</td>
                             <td>{{ wish.description|slice(0,50) }}</td>
                             <td>{{ wish.author }}</td>
+                            <td>{{ wish.categorie.name }}</td>
                             <td>{{ wish.dateCreated|date("Y-m-d") }}</td>
                             <td> 
                                 <a class="btn btn-info" href="{{ path('app_wish_detail',{'id':wish.id}) }}"><i class="fa-regular fa-eye"></i></a>
