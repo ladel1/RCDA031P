@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calculatrice{% endblock %}
+
+{% block body %}
+<div class="row text-center mt-4">
+    <h1>Calculatrice</h1>
+</div>
+<div class="row mt-3">
+    <form action="" method="get">
+        <div class="mb-3">
+            <label for="op1" class="form-label">Opérande 1</label>
+            <input type="number" class="form-control" id="op1" name="op1" placeholder="ex. 15">
+        </div>
+        <div class="mb-3">
+            <label for="op" class="form-label">Opérateur</label>
+            <select  class="form-select" id="op" name="op">
+                {% for key,val in {'+':'add','*':'mult','/':'div','-':'sub','%':'mod'} %}
+                    <option value="{{ val }}" >{{ key }}</option>
+                {% endfor %}
+            </select>
+          </div>        
+        <div class="mb-3">
+            <label for="op2" class="form-label">Opérande 2</label>
+            <input type="number" class="form-control" id="op2" name="op2" placeholder="ex. 15">
+        </div>
+    </form>
+</div>
+{% endblock %}

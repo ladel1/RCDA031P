@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(
         Request $request,
-        MailerInterface $mailer
+        MailerService $mailer
         ): Response
     {
         $contact = new Contact();
@@ -24,17 +25,7 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            
-            $mail = (new Email())
-                        ->to("contact@exemple.fr")                        
-                        ->from($contact->getEmail())
-                        ->subject($contact->getSujet())
-                        ->html("<p>". $contact->getContenu() ."</p>");
-
-            $mailer->send($mail);
-
-            
-
+            $mailer->sendEmail($contact);
         }
 
         return $this->render('contact/index.html.twig', [
