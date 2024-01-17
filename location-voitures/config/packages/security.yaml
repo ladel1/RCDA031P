@@ -4,14 +4,23 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+            custom_authenticator: App\Security\LoginAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -24,6 +33,13 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/location/new, roles: ROLE_CLIENT }
+        - { path: ^/location/edit, roles: ROLE_CLIENT }
+        - { path: ^/location/delete, roles: ROLE_CLIENT }
+        - { path: ^/location, roles: ROLE_USER }
+        - { path: ^/voiture/new, roles: ROLE_COMMERCIAL }
+        - { path: ^/voiture/edit, roles: ROLE_COMMERCIAL }
+        - { path: ^/voiture/delete, roles: ROLE_COMMERCIAL }
 
 when@test:
     security:

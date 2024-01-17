@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<h1>Mon Profil</h1>
+
+{{ include('client/_form.html.twig', {'button_label': 'modifier'}) }}
+{% endblock %}

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\User;
 use App\Form\LocationType;
 use App\Repository\LocationRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +19,42 @@ class LocationController extends AbstractController
     #[Route('/', name: 'app_location_index', methods: ['GET'])]
     public function index(LocationRepository $locationRepository): Response
     {
+
+        if($this->isGranted("ROLE_COMMERCIAL")){
+            $locations = $locationRepository->findAll();
+        }else if($this->isGranted("ROLE_CLIENT")){
+            /**
+             * @var User
+             */
+            $user = $this->getUser();
+            $locations = $locationRepository->findBy(["client"=>$user->getClient()]);
+        }
+
         return $this->render('location/index.html.twig', [
-            'locations' => $locationRepository->findAll(),
+            'locations' => $locations,
         ]);
     }
 
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        /**
+         * @var User
+         */
+        $user = $this->getUser();
+        $message = null;
+        if(!$user->getClient()){
+            $message = "Vous n'avez un profil!";
+        }
+
         $location = new Location();
         $form = $this->createForm(LocationType::class, $location);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $location->setCoefPrix(1);
+            $location->setClient($user->getClient());
+            $location->setEtat(false);
             $entityManager->persist($location);
             $entityManager->flush();
 
@@ -39,9 +64,22 @@ class LocationController extends AbstractController
         return $this->render('location/new.html.twig', [
             'location' => $location,
             'form' => $form,
+            "message"=>$message
         ]);
     }
 
+    #[Route('/validate/{id}', name: 'app_location_validate', methods: ['GET'])]
+    public function validate(Location $location,EntityManagerInterface $em): Response
+    {
+
+        // validation CSRF !!!!!!!!!!
+
+        $location->setEtat(true);
+        $em->flush();
+
+        return $this->redirectToRoute("app_location_index");
+
+    }
     #[Route('/{id}', name: 'app_location_show', methods: ['GET'])]
     public function show(Location $location): Response
     {

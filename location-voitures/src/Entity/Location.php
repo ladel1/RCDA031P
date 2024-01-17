@@ -31,6 +31,9 @@ class Location
     #[ORM\JoinColumn(nullable: false)]
     private ?Voiture $voiture = null;
 
+    #[ORM\Column]
+    private ?bool $etat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Location
     public function setVoiture(?Voiture $voiture): static
     {
         $this->voiture = $voiture;
+
+        return $this;
+    }
+
+    public function isEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): static
+    {
+        $this->etat = $etat;
 
         return $this;
     }

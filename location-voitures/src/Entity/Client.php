@@ -34,6 +34,10 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Location::class)]
     private Collection $locations;
 
+    #[ORM\OneToOne(inversedBy: 'client', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -130,6 +134,18 @@ class Client
                 $location->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

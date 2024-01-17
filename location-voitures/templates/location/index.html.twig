@@ -12,6 +12,7 @@
                 <th>DateDebut</th>
                 <th>DateRetour</th>
                 <th>CoefPrix</th>
+                <th>Etat</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,8 +23,12 @@
                 <td>{{ location.dateDebut ? location.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ location.dateRetour ? location.dateRetour|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ location.coefPrix }}</td>
+                <td>{{ location.etat?"Validée":"En attente" }}</td>
                 <td>
                     <a href="{{ path('app_location_show', {'id': location.id}) }}">show</a>
+                    {% if is_granted("ROLE_COMMERCIAL") %}
+                        <a href="{{ path('app_location_validate', {'id': location.id}) }}">Valider</a>
+                    {% endif %}
                     <a href="{{ path('app_location_edit', {'id': location.id}) }}">edit</a>
                 </td>
             </tr>

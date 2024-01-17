@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Create new Location</h1>
 
+    {% if message %}
+        {{ message }}
+        <a href="{{ path("app_profile") }}">Mon profil</a>
+    {% endif %}
+
     {{ include('location/_form.html.twig') }}
 
     <a href="{{ path('app_location_index') }}">back to list</a>
