@@ -23,7 +23,7 @@
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
-
+    <a href="{{ path('app_forgot_password_request') }}">Reset Password</a>
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>

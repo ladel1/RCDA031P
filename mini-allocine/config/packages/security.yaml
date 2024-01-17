@@ -39,7 +39,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/titres/ajouter, roles: ROLE_EDITOR }
+        - { path: ^/titres/ajouter, roles: ROLE_EDITOR, attributes: [] }
         - { path: ^/titres/modifier, roles: ROLE_EDITOR }
         - { path: ^/titres/supprimer, roles: ROLE_EDITOR }
 

@@ -49,6 +49,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
+        /**
+         * @var Session
+         */
+        $session = $request->getSession();
+        $session->getFlashBag()->add("success", "Logged in");
         return new RedirectResponse($this->urlGenerator->generate('app_media_ajouter'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
