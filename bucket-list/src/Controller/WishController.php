@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Wish;
 use App\Form\WishType;
 use App\Repository\WishRepository;
+use App\Service\Censurator;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\PseudoTypes\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,15 +25,21 @@ class WishController extends AbstractController
     }
 
     #[Route('/ajouter', name: '_add')]
-    public function add(Request $request,EntityManagerInterface $em):Response{
+    public function add(
+                    Request $request,
+                    EntityManagerInterface $em,
+                    Censurator $censurator
+                        ):Response{
 
         $wish = new Wish();
+        $wish->setAuthor($this->getUser()->getUserIdentifier());
         $wishForm = $this->createForm(WishType::class,$wish);
 
         $wishForm->handleRequest($request);
         if($wishForm->isSubmitted() && $wishForm->isValid()){
             $wish->setIsPublished(True);
             $wish->setDateCreated(new \DateTime());
+            $wish->setDescription( $censurator->purify2( $wish->getDescription() ) );
             $em->persist($wish);
             $em->flush();
             $this->addFlash("success","Wish créé");
